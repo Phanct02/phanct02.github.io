@@ -9,12 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const stageHeight = container.clientHeight * 1.1;
 
   const messages = [
-    "Chúc cậu một ngày thật tươi sáng!",
+    "Chúc cậu một ngày 1/6 zui zẻ",
     "Tình yêu của tớ với cậu là điều kỳ diệu nhất. :))",
-    "Tớ luôn nghĩ về cậu.",
-    "Hãy cười lên, người tôi thích (^人^)!",
+    "Tớ luôn nghĩ về cậu.:V",
     "Mỗi khoảnh khắc bên cậu đối với tớ thật quý giá!",
-    "Tài❤️ Kiều Anh",
+    "Tài❤️ Kiều Anh (^人^)",
     "Cậu là nguồn động lực của tớ.",
     "Nhớ K.Anh mỗi giây từng phút.",
     "Và tớ mong cậu Bỏ Bin đi :D",
@@ -172,14 +171,24 @@ document.addEventListener("DOMContentLoaded", () => {
     playButton.style.display = "none";
   });
 
-  document.addEventListener("DOMContentLoaded", function() {
-  // Giả sử các phần tử chữ được tạo sẵn với class "text" và được đặt trong thẻ có id "container"
+document.addEventListener("DOMContentLoaded", function() {
+  // Lấy phần tử container và stage
   const container = document.getElementById("container");
-  const texts = document.querySelectorAll('.text');
+  const stage = document.getElementById("stage");
+  // Lấy tất cả các phần tử có class "text"
+  const texts = document.querySelectorAll(".text");
   
-  // Xác định kích thước của stage theo container (mở rộng 110% cho hiệu ứng di chuyển)
+  // Tính kích thước của stage dựa trên container (mở rộng 110%)
   const stageWidth = container.clientWidth * 1.1;
   const stageHeight = container.clientHeight * 1.1;
+  
+  // Nếu chưa có vận tốc, gán vận tốc ngẫu nhiên cho mỗi dòng chữ
+  texts.forEach(text => {
+    if (typeof text.velocityX === "undefined" || typeof text.velocityY === "undefined") {
+      text.velocityX = (Math.random() - 0.5) * 0.05;  // đơn vị: px/ms
+      text.velocityY = (Math.random() - 0.5) * 0.05;
+    }
+  });
   
   let lastTimestamp = null;
   
@@ -188,15 +197,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const delta = timestamp - lastTimestamp;
     lastTimestamp = timestamp;
     
-    // Cập nhật vị trí cho từng dòng chữ dựa trên vận tốc đã gán và đảm bảo không vượt ra ngoài biên của stage
+    // Cập nhật vị trí của mỗi dòng chữ dựa trên vận tốc
     texts.forEach(text => {
       let left = parseFloat(text.style.left);
       let top = parseFloat(text.style.top);
+  
       let newLeft = left + text.velocityX * delta;
       let newTop = top + text.velocityY * delta;
+  
       const elemWidth = text.offsetWidth;
       const elemHeight = text.offsetHeight;
-      
+  
+      // Kiểm tra và giới hạn theo biên của stage
       if (newLeft < 0) {
         newLeft = 0;
         text.velocityX = -text.velocityX;
@@ -213,27 +225,30 @@ document.addEventListener("DOMContentLoaded", () => {
         newTop = stageHeight - elemHeight;
         text.velocityY = -text.velocityY;
       }
+  
       text.style.left = newLeft + "px";
       text.style.top = newTop + "px";
     });
-    
-    // Kiểm tra va chạm giữa các dòng chữ và điều chỉnh vị trí để tách ra
+  
+    // Kiểm tra va chạm giữa các dòng chữ và điều chỉnh vị trí nếu cần
     const textsArr = Array.from(texts);
     for (let i = 0; i < textsArr.length; i++) {
       for (let j = i + 1; j < textsArr.length; j++) {
         const rect1 = textsArr[i].getBoundingClientRect();
         const rect2 = textsArr[j].getBoundingClientRect();
-        // Nếu bounding rect của hai dòng chữ giao nhau
+  
+        // Nếu bounding box của chúng giao nhau (va chạm)
         if (
           rect1.right > rect2.left &&
           rect1.left < rect2.right &&
           rect1.bottom > rect2.top &&
           rect1.top < rect2.bottom
         ) {
-          // Tính khoảng chồng lấn theo hai trục
+          // Tính khoảng chồng lấn theo trục X và Y
           const overlapX = Math.min(rect1.right - rect2.left, rect2.right - rect1.left);
           const overlapY = Math.min(rect1.bottom - rect2.top, rect2.bottom - rect1.top);
-          // Chọn trục chồng lấn nhỏ hơn để điều chỉnh
+  
+          // Điều chỉnh theo trục có chồng lấn ít hơn
           if (overlapX < overlapY) {
             const shift = overlapX / 2;
             const center1 = rect1.left + rect1.width / 2;
@@ -260,13 +275,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     }
-    
+  
+    // Yêu cầu frame tiếp theo
     requestAnimationFrame(animateTexts);
   }
   
   // Bắt đầu chạy animation
   requestAnimationFrame(animateTexts);
 });
+
 
 
   // Auto di chuyển các dòng chữ bằng requestAnimationFrame
