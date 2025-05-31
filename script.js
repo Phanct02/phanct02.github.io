@@ -175,6 +175,103 @@ document.addEventListener("DOMContentLoaded", () => {
     playButton.style.display = "none";
   });
 
+  document.addEventListener("DOMContentLoaded", function() {
+  // Giả sử các phần tử chữ được tạo sẵn với class "text" và được đặt trong thẻ có id "container"
+  const container = document.getElementById("container");
+  const texts = document.querySelectorAll('.text');
+  
+  // Xác định kích thước của stage theo container (mở rộng 110% cho hiệu ứng di chuyển)
+  const stageWidth = container.clientWidth * 1.1;
+  const stageHeight = container.clientHeight * 1.1;
+  
+  let lastTimestamp = null;
+  
+  function animateTexts(timestamp) {
+    if (!lastTimestamp) lastTimestamp = timestamp;
+    const delta = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
+    
+    // Cập nhật vị trí cho từng dòng chữ dựa trên vận tốc đã gán và đảm bảo không vượt ra ngoài biên của stage
+    texts.forEach(text => {
+      let left = parseFloat(text.style.left);
+      let top = parseFloat(text.style.top);
+      let newLeft = left + text.velocityX * delta;
+      let newTop = top + text.velocityY * delta;
+      const elemWidth = text.offsetWidth;
+      const elemHeight = text.offsetHeight;
+      
+      if (newLeft < 0) {
+        newLeft = 0;
+        text.velocityX = -text.velocityX;
+      }
+      if (newLeft > stageWidth - elemWidth) {
+        newLeft = stageWidth - elemWidth;
+        text.velocityX = -text.velocityX;
+      }
+      if (newTop < 0) {
+        newTop = 0;
+        text.velocityY = -text.velocityY;
+      }
+      if (newTop > stageHeight - elemHeight) {
+        newTop = stageHeight - elemHeight;
+        text.velocityY = -text.velocityY;
+      }
+      text.style.left = newLeft + "px";
+      text.style.top = newTop + "px";
+    });
+    
+    // Kiểm tra va chạm giữa các dòng chữ và điều chỉnh vị trí để tách ra
+    const textsArr = Array.from(texts);
+    for (let i = 0; i < textsArr.length; i++) {
+      for (let j = i + 1; j < textsArr.length; j++) {
+        const rect1 = textsArr[i].getBoundingClientRect();
+        const rect2 = textsArr[j].getBoundingClientRect();
+        // Nếu bounding rect của hai dòng chữ giao nhau
+        if (
+          rect1.right > rect2.left &&
+          rect1.left < rect2.right &&
+          rect1.bottom > rect2.top &&
+          rect1.top < rect2.bottom
+        ) {
+          // Tính khoảng chồng lấn theo hai trục
+          const overlapX = Math.min(rect1.right - rect2.left, rect2.right - rect1.left);
+          const overlapY = Math.min(rect1.bottom - rect2.top, rect2.bottom - rect1.top);
+          // Chọn trục chồng lấn nhỏ hơn để điều chỉnh
+          if (overlapX < overlapY) {
+            const shift = overlapX / 2;
+            const center1 = rect1.left + rect1.width / 2;
+            const center2 = rect2.left + rect2.width / 2;
+            if (center1 < center2) {
+              textsArr[i].style.left = (parseFloat(textsArr[i].style.left) - shift) + "px";
+              textsArr[j].style.left = (parseFloat(textsArr[j].style.left) + shift) + "px";
+            } else {
+              textsArr[i].style.left = (parseFloat(textsArr[i].style.left) + shift) + "px";
+              textsArr[j].style.left = (parseFloat(textsArr[j].style.left) - shift) + "px";
+            }
+          } else {
+            const shift = overlapY / 2;
+            const center1 = rect1.top + rect1.height / 2;
+            const center2 = rect2.top + rect2.height / 2;
+            if (center1 < center2) {
+              textsArr[i].style.top = (parseFloat(textsArr[i].style.top) - shift) + "px";
+              textsArr[j].style.top = (parseFloat(textsArr[j].style.top) + shift) + "px";
+            } else {
+              textsArr[i].style.top = (parseFloat(textsArr[i].style.top) + shift) + "px";
+              textsArr[j].style.top = (parseFloat(textsArr[j].style.top) - shift) + "px";
+            }
+          }
+        }
+      }
+    }
+    
+    requestAnimationFrame(animateTexts);
+  }
+  
+  // Bắt đầu chạy animation
+  requestAnimationFrame(animateTexts);
+});
+
+
   // Auto di chuyển các dòng chữ bằng requestAnimationFrame
   const texts = document.querySelectorAll('.text');
   let lastTimestamp = null;
