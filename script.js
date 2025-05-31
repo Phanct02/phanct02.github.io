@@ -1,80 +1,212 @@
-// List of predefined lines
-const lines = [
-    "ZY2JL216QK1016Y5RY1216R412QVA1513H9PF113Q0",
-    "AB3TX135LM1198Y2HX1435D789TCD1642G4JF845T1",
-    "XY7GH425KL1824F5RV1119B567NZX1379J6PL902H3",
-    "JK5QM287RF1307W1NV1568K892LKP1490M8RT718G2",
-    "MN4KL987BN1643Z6VU1265R123PKQ1812L7GF456B0",
-    "UV9WP375DC1789X3TF1452A345QLM1234N3YP612R9",
-    "XZ1JL215NK1186R2QK1278G912QTQ1534M4PJ114F0",
-    "BC4TX124LM1078Y1HX1525D679TCD1552G3JF734S2",
-    "YZ6GH326KL1734F4RV1229B478NZY1269J5PK801J4",
-    "GH7QM296RF1497W2NV1458K981LKO1390N8RT829F3",
-    "OP2KL776BN1523Z5VU1375R234PLQ1743L6DF345G1",
-    "TU8WP564DC1899X4TF1362A456PLM1345L4YQ723P8",
-    "ZR3JL314QK1125Y3RY1326R321QXB1623H9SF224L9",
-    "CD7TX245LM1368Y3GX1324D469TDE1632H2KG945L3",
-    "XZ8GH547KL1294F2RV1339B568NZX1159K4PL713R5",
-    "JL2QM487RF1498W4OV1448K781LKT1540P8RT637L6",
-    "QR6KL689BN1623Y4VU1155R534PMS1862K8GF234H7",
-    "WX3WP485DC1788X5TF1572A124MLK1536N5YP421M9",
-    "ZA5JL113QK1026Y5RY1326R123PVA1413H8DF113P1",
-    "EF2TX139LM1197Y1HX1526D991TDF1752F3JG934K2",
-    "UX4GH315KL1384F2RV1289B674NZX1589M5PL810N8",
-    "MG6QM387RF1397W3NV1568K573LKP1390L9RT518F2",
-    "RX3KL874BN1423Z4VU1175R745QKR1642M9DF745J3",
-    "JK1WP275DC1679X6TF1682A456QPL1573K7YP823M1",
-    "LN6JL217QK1176Y2RY1336R132QVA1433H7PF214G9",
-    "WE5TX249LM1087Y4HX1426D579TDF1531H2JG835L2",
-    "UV9GH337KL1454F5RV1139B779NZX1679J3PK514R8",
-    "ZY4QM278RF1207W1NV1258K894LKP1290N8RT427G3",
-    "BD2KL578BN1233Z5VU1195R445PLM1456M7GF314H1",
-    "HF7WP386DC1589X7TF1492A245KPL1635N3YP711J9",
-    "ZX3JL105QK1106Y1RY1416R124PVA1723H9DF114R0",
-    "GT7TX325LM1169Y5HX1325D569TDF1423F4JG734M5",
-    "JK1GH228KL1564F3RV1549B279NZY1279M4PL809K3",
-    "AL8QM489RF1499W3OV1358K688LKT1550P9RT517J4",
-    "PH2KL769BN1623Y2VU1285R345QKR1534L8GF215F6",
-    "OV9WP475DC1788X6TF1572A134MLK1245N4YP311P7",
-    "ZR4JL213QK1036Y4RY1126R224PVA1413H8DF123R1",
-    "BC6TX237LM1198Y2HX1435D679TDF1323H4JG843L4",
-    "YZ5GH426KL1834F4RV1229B678NZY1269J6PK512N2",
-    "GH9QM287RF1397W2OV1448K781LKO1390L7RT819M3",
-    "OP1KL897BN1523Z2VU1175R123PLQ1763L5GF225P5",
-    "TU8WP356DC1899X5TF1362A445PLM1345L5YQ726P4",
-    "QR3JL314QK1125Y3RY1326R321QXB1623H6SF324J9",
-    "EF5TX145LM1268Y4GX1124D469TDF1532H3KG945P2",
-    "XZ8GH457KL1294F3RV1339B268NZX1359K4PL713N3",
-    "JL6QM587RF1598W4OV1448K781LKT1340P9RT637P5",
-    "QR4KL789BN1623Y4VU1285R534PMS1763K5GF134H6",
-    "WX6WP485DC1888X5TF1572A124MLK1536N7YP425N3",
-    "ZA1JL116QK1026Y4RY1326R123PVA1613H3DF118P0",
-    "GT4TX149LM1297Y1HX1426D991TDF1752F5JG934L3"
-];
+document.addEventListener("DOMContentLoaded", () => {
+  const stage = document.getElementById("stage");
+  const container = document.getElementById("container");
+  const bgMusic = document.getElementById("bg-music");
+  const playButton = document.getElementById("play-music");
 
-// Function to get a random line from the list
-function getRandomLine() {
-    const randomIndex = Math.floor(Math.random() * lines.length);
-    return lines[randomIndex];
-}
+  // Kích thước của stage (110vw x 110vh)
+  const stageWidth = container.clientWidth * 1.1;
+  const stageHeight = container.clientHeight * 1.1;
 
-// Function to validate user input
-function validateInput(input) {
-    return input.length >= 7 && /\d/.test(input) && /[a-zA-Z]/.test(input);
-}
+  const messages = [
+    "Chúc cậu một ngày thật tươi sáng!",
+    "Tình yêu của tớ là điều kỳ diệu nhất. :))",
+    "Tớ luôn nghĩ về cậu.",
+    "Hãy cười lên, người tôi thích (^人^)!",
+    "Mỗi khoảnh khắc bên cậu đối với tớ thật quý giá!",
+    "Cậu luôn làm trái tim tớ đập nhanh hơn.",
+    "Tài❤️ Kiều Anh",
+    "Cậu là nguồn cảm hứng của tớ.",
+    "Nhớ K.Anh mỗi giây từng phút.",
+    "Và tớ mong cậu Bỏ Bin đi",
+    "Kiều Anh💔Bin",
+    "Bên cậu, tớ thấy đời thật ý nghĩa.",
+    "Những kỷ niệm bên cậu thật ngọt ngào đối với tớ.",
+    "Nụ cười của cậu thắp sáng đời tớ.",
+    "Mọi thứ trở nên đẹp khi có cậu, Kiều Anh ạ.:P",
+    "Giấc mơ của tớ là có cậu mãi bên cạnh tớ mọi lúc. ;)",
+    "Tớ tin rằng, cậu là người định mệnh của tớ. (￣y▽,￣)╭ ",
+    "Hạnh phúc là khi thấy cậu cười. \^o^/",
+    "tớ yêu cậu như cách cậu yêu Kira :)))))",
+    "Tình yêu này thật giản dị mà thu hút...."
+  ];
 
-// Add event listener to the form
-document.getElementById('inputForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const userInput = document.getElementById('userInput').value;
-    const errorMessage = document.getElementById('errorMessage');
-    const randomLineElement = document.getElementById('randomLine');
+  // Mảng để lưu bounding rectangle của các text (để không trùng nhau)
+  const placedRects = [];
 
-    if (validateInput(userInput)) {
-        errorMessage.textContent = '';
-        randomLineElement.textContent = getRandomLine();
-    } else {
-        errorMessage.textContent = 'Invailid Key Code.';
-        randomLineElement.textContent = ''; // Clear random line if validation fails
+  function isOverlap(rectA, rectB) {
+    return !(rectA.right < rectB.left ||
+             rectA.left > rectB.right ||
+             rectA.bottom < rectB.top ||
+             rectA.top > rectB.bottom);
+  }
+
+  function getNonOverlappingPosition(elemWidth, elemHeight) {
+    let maxAttempts = 100;
+    let attempt = 0;
+    let pos = { left: 0, top: 0 };
+    let found = false;
+    while (attempt < maxAttempts && !found) {
+      pos.left = Math.random() * (stageWidth - elemWidth);
+      pos.top = Math.random() * (stageHeight - elemHeight);
+      let newRect = {
+        left: pos.left,
+        top: pos.top,
+        right: pos.left + elemWidth,
+        bottom: pos.top + elemHeight
+      };
+
+      let overlap = placedRects.some(rect => isOverlap(newRect, rect));
+      if (!overlap) {
+        placedRects.push(newRect);
+        found = true;
+      }
+      attempt++;
     }
+    return pos;
+  }
+
+  function randomPink() {
+    const hue = Math.round(320 + Math.random() * 30);
+    const saturation = Math.round(80 + Math.random() * 20);
+    const lightness = Math.round(60 + Math.random() * 10);
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  }
+
+  // Tạo các dòng chữ và gán cho chúng vị trí cùng vận tốc di chuyển chậm (nhân với 0.05)
+  messages.forEach(msg => {
+    const textDiv = document.createElement("div");
+    textDiv.className = "text";
+    textDiv.textContent = msg;
+    textDiv.style.color = randomPink();
+
+    // Ẩn tạm thời để đo kích thước
+    textDiv.style.visibility = "hidden";
+    stage.appendChild(textDiv);
+    const elemWidth = textDiv.offsetWidth;
+    const elemHeight = textDiv.offsetHeight;
+
+    const pos = getNonOverlappingPosition(elemWidth, elemHeight);
+    textDiv.style.left = pos.left + "px";
+    textDiv.style.top = pos.top + "px";
+    textDiv.style.visibility = "visible";
+
+    // Gán vận tốc ngẫu nhiên (px/ms)
+    textDiv.velocityX = (Math.random() - 0.5) * 0.05;
+    textDiv.velocityY = (Math.random() - 0.5) * 0.05;
+  });
+
+  // Spawn trái tim (15 trái tim sử dụng heart.png)
+  const numHearts = 15;
+  for (let i = 0; i < numHearts; i++) {
+    spawnHeart();
+  }
+  function spawnHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.style.left = Math.random() * stageWidth + "px";
+    heart.style.top = stageHeight - Math.random() * 100 + "px";
+    heart.style.animationDelay = Math.random() * 2 + "s";
+    heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+    stage.appendChild(heart);
+  }
+
+  // Xử lý kéo/vuốt (drag & touch) để di chuyển stage
+  let isDragging = false, startX = 0, startY = 0, currentTranslateX = 0, currentTranslateY = 0;
+  container.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    container.style.cursor = "grabbing";
+  });
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    stage.style.transform = `translate(${currentTranslateX + dx}px, ${currentTranslateY + dy}px)`;
+  });
+  document.addEventListener("mouseup", (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    currentTranslateX += dx;
+    currentTranslateY += dy;
+    isDragging = false;
+    container.style.cursor = "grab";
+  });
+  container.addEventListener("touchstart", (e) => {
+    isDragging = true;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  });
+  container.addEventListener("touchmove", (e) => {
+    if (!isDragging) return;
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    stage.style.transform = `translate(${currentTranslateX + dx}px, ${currentTranslateY + dy}px)`;
+  });
+  container.addEventListener("touchend", (e) => {
+    if (!isDragging) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    currentTranslateX += dx;
+    currentTranslateY += dy;
+    isDragging = false;
+  });
+
+  // Hiệu ứng hiện stage (các text & trái tim) sau 3 giây
+  stage.style.opacity = "0";
+  setTimeout(() => {
+    stage.style.transition = "opacity 1s ease";
+    stage.style.opacity = "1";
+  }, 3000);
+
+  // Xử lý nhạc nền: tự động phát; nếu bị chặn, hiển thị nút Play Music
+  bgMusic.play().catch(() => {
+    playButton.style.display = "block";
+  });
+  playButton.addEventListener("click", () => {
+    bgMusic.play();
+    playButton.style.display = "none";
+  });
+
+  // Auto di chuyển các dòng chữ bằng requestAnimationFrame
+  const texts = document.querySelectorAll('.text');
+  let lastTimestamp = null;
+  function animateTexts(timestamp) {
+    if (!lastTimestamp) lastTimestamp = timestamp;
+    const delta = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
+    
+    texts.forEach(text => {
+      let left = parseFloat(text.style.left);
+      let top = parseFloat(text.style.top);
+      let newLeft = left + text.velocityX * delta;
+      let newTop = top + text.velocityY * delta;
+      const elemWidth = text.offsetWidth;
+      const elemHeight = text.offsetHeight;
+      
+      // Kiểm tra biên của stage và đảo hướng nếu chạm
+      if (newLeft < 0) {
+        newLeft = 0;
+        text.velocityX = -text.velocityX;
+      }
+      if (newLeft > stageWidth - elemWidth) {
+        newLeft = stageWidth - elemWidth;
+        text.velocityX = -text.velocityX;
+      }
+      if (newTop < 0) {
+        newTop = 0;
+        text.velocityY = -text.velocityY;
+      }
+      if (newTop > stageHeight - elemHeight) {
+        newTop = stageHeight - elemHeight;
+        text.velocityY = -text.velocityY;
+      }
+      text.style.left = newLeft + "px";
+      text.style.top = newTop + "px";
+    });
+    requestAnimationFrame(animateTexts);
+  }
+  requestAnimationFrame(animateTexts);
 });
