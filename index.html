@@ -1,42 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phanct02 Hub Keysystem</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            text-align: center;
-            padding: 30px;
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .error {
-            color: red;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bất Ngờ Dành Cho Em</title>
+  <!-- Google Fonts: Lobster -->
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Phanct02 Hub Keysystem</h1>
-        <form id="inputForm">
-            <input type="text" id="userInput" placeholder="Enter Key code" required>
-            <button type="submit">Submit</button>
-        </form>
-        <p id="errorMessage" class="error"></p>
-        <p id="randomLine"></p>
-        <script src="script.js"></script>
-        <p>Please Enter Your Key Code From The Hub</p>
-    </div>
+  <!-- Nút Play Music: xuất hiện nếu trình duyệt chặn autoplay -->
+  <button id="play-music">Play Music</button>
+  
+  <!-- Container chứa stage (vùng hiển thị text & trái tim) -->
+  <div id="container">
+    <div id="stage"></div>
+  </div>
+  
+  <!-- Nhạc nền (load từ URL) -->
+  <audio id="bg-music" src="https://phancext02.weebly.com/uploads/1/5/0/9/150978976/music.mp3" loop autoplay style="display:none;"></audio>
+  
+  <script src="script.js"></script>
 </body>
 </html>
