@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "Tình yêu này thật giản dị mà thu hút...."
   ];
 
-  // Mảng để lưu bounding rectangle của các text (để không trùng nhau)
+  // Mảng lưu bounding rectangle dùng để tránh chồng lấn các dòng chữ
   const placedRects = [];
 
   function isOverlap(rectA, rectB) {
@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
   }
 
-  // Tạo các dòng chữ và gán cho chúng vị trí cùng vận tốc di chuyển chậm (nhân với 0.05)
+  // Spawn các dòng chữ và gán vận tốc di chuyển chậm (0.05 px/ms)
   messages.forEach(msg => {
     const textDiv = document.createElement("div");
     textDiv.className = "text";
@@ -111,8 +111,13 @@ document.addEventListener("DOMContentLoaded", () => {
     stage.appendChild(heart);
   }
 
-  // Xử lý kéo/vuốt (drag & touch) để di chuyển stage
-  let isDragging = false, startX = 0, startY = 0, currentTranslateX = 0, currentTranslateY = 0;
+  // Xử lý kéo (drag & touch) để di chuyển stage
+  let isDragging = false,
+      startX = 0,
+      startY = 0,
+      currentTranslateX = 0,
+      currentTranslateY = 0;
+  
   container.addEventListener("mousedown", (e) => {
     isDragging = true;
     startX = e.clientX;
@@ -154,14 +159,14 @@ document.addEventListener("DOMContentLoaded", () => {
     isDragging = false;
   });
 
-  // Hiệu ứng hiện stage (các text & trái tim) sau 3 giây
+  // Hiệu ứng hiện stage (text & trái tim) sau 3 giây
   stage.style.opacity = "0";
   setTimeout(() => {
     stage.style.transition = "opacity 1s ease";
     stage.style.opacity = "1";
   }, 3000);
 
-  // Xử lý nhạc nền: tự động phát; nếu bị chặn, hiển thị nút Play Music
+  // Xử lý nhạc nền: cố gắng tự phát; nếu trình duyệt chặn, hiển thị nút "Play Music"
   bgMusic.play().catch(() => {
     playButton.style.display = "block";
   });
@@ -186,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const elemWidth = text.offsetWidth;
       const elemHeight = text.offsetHeight;
       
-      // Kiểm tra biên của stage và đảo hướng nếu chạm
+      // Kiểm tra biên của stage và đổi hướng nếu chạm
       if (newLeft < 0) {
         newLeft = 0;
         text.velocityX = -text.velocityX;
