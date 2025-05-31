@@ -10,25 +10,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const messages = [
     "Chúc cậu một ngày thật tươi sáng!",
-    "Tình yêu của tớ là điều kỳ diệu nhất. :))",
+    "Tình yêu của tớ với cậu là điều kỳ diệu nhất. :))",
     "Tớ luôn nghĩ về cậu.",
     "Hãy cười lên, người tôi thích (^人^)!",
     "Mỗi khoảnh khắc bên cậu đối với tớ thật quý giá!",
-    "Cậu luôn làm trái tim tớ đập nhanh hơn.",
     "Tài❤️ Kiều Anh",
-    "Cậu là nguồn cảm hứng của tớ.",
+    "Cậu là nguồn động lực của tớ.",
     "Nhớ K.Anh mỗi giây từng phút.",
-    "Và tớ mong cậu Bỏ Bin đi",
+    "Và tớ mong cậu Bỏ Bin đi :D",
     "Kiều Anh💔Bin",
     "Bên cậu, tớ thấy đời thật ý nghĩa.",
-    "Những kỷ niệm bên cậu thật ngọt ngào đối với tớ.",
     "Nụ cười của cậu thắp sáng đời tớ.",
     "Mọi thứ trở nên đẹp khi có cậu, Kiều Anh ạ.:P",
     "Giấc mơ của tớ là có cậu mãi bên cạnh tớ mọi lúc. ;)",
     "Tớ tin rằng, cậu là người định mệnh của tớ. (￣y▽,￣)╭ ",
     "Hạnh phúc là khi thấy cậu cười. \^o^/",
     "tớ yêu cậu như cách cậu yêu Kira :)))))",
-    "Tình yêu này thật giản dị mà thu hút...."
   ];
 
   // Mảng lưu bounding rectangle dùng để tránh chồng lấn các dòng chữ
